@@ -71,8 +71,9 @@ def select_move(move):
         elif move[0] == "K":
             pass
         else:
-            pawn_kill(file_to_col(move[0]), rank_to_row(
-                move[3]), file_to_col(move[2]))
+            pawn_kill(file_to_col(move[0]),
+                      rank_to_row(move[3]),
+                      file_to_col(move[2]))
 
 
 def pawn_move(row, col):
