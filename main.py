@@ -1,3 +1,9 @@
+class Piece:
+    def __init__(self, symbol):
+        self.symbol = symbol
+        self.has_moved = False
+
+
 board = [
     ["r", "n", "b", "q", "k", "b", "n", "r"],
     ["p", "p", "p", "p", "p", "p", "p", "p"],
@@ -8,12 +14,13 @@ board = [
     ["P", "P", "P", "P", "P", "P", "P", "P"],
     ["R", "N", "B", "Q", "K", "B", "N", "R"],
 ]
+board = [list(map(Piece, row)) for row in board]
 
 
 def show_board():
     for row in board:
         for piece in row:
-            print(piece, end=" ")
+            print(piece.symbol, end=" ")
         print()
     print()
 
@@ -77,18 +84,17 @@ def select_move(move):
 
 
 def pawn_move(row, col):
-    if board[row + 2][col] == "P" and board[row][col] == ".":
-        board[row + 2][col] = "."
-        board[row][col] = "P"
-    elif board[row + 1][col] == "P" and board[row][col] == ".":
-        board[row + 1][col] = "."
-        board[row][col] = "P"
+    if board[row + 1][col].symbol == "P" and board[row][col].symbol == ".":
+        board[row + 1][col].symbol = "."
+        board[row][col].symbol = "P"
+    elif board[row + 2][col].symbol == "P" and board[row][col].symbol == ".":
+        board[row + 2][col], board[row][col] = board[row][col], board[row + 2][col]
 
 
 def pawn_kill(pawn_col, row, col):
-    if board[row + 1][pawn_col] == "P" and board[row][col] != ".":
-        board[row + 1][pawn_col] = "."
-        board[row][col] = "P"
+    if board[row + 1][pawn_col].symbol == "P" and board[row][col].symbol != ".":
+        board[row + 1][pawn_col].symbol = "."
+        board[row][col].symbol = "P"
 
 
 turn = "White"
